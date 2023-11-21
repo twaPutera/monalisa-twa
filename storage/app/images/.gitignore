@@ -1,0 +1,9 @@
+*
+!asset/
+!asset-service/
+!asset-opname/
+!asset-pemutihan/
+!asset-pengaduan/
+!asset-respon-pengaduan/
+!qr-code/
+!.gitignore

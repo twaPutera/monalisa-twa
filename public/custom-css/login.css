@@ -1,0 +1,143 @@
+h1, h2, h3, h4, h5, h6, p, a {
+    font-family: 'Jost', sans-serif;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    line-height: 1.2;
+}
+
+body {
+    overflow-x: hidden !important;
+}
+
+h1, .h1 {
+    font-size: calc(1.35rem + 1.2vw);
+}
+@media (min-width: 1200px) {
+    h1, .h1 {
+        font-size: 2.25rem;
+    }
+}
+
+h2, .h2 {
+    font-size: calc(1.305rem + 0.66vw);
+}
+@media (min-width: 1200px) {
+    h2, .h2 {
+        font-size: 1.8rem;
+    }
+}
+
+h3, .h3 {
+    font-size: calc(1.2825rem + 0.39vw);
+}
+@media (min-width: 1200px) {
+    h3, .h3 {
+        font-size: 1.575rem;
+    }
+}
+
+h4, .h4 {
+    font-size: calc(1.26rem + 0.12vw);
+}
+@media (min-width: 1200px) {
+    h4, .h4 {
+        font-size: 1.35rem;
+    }
+}
+
+h5, .h5 {
+    font-size: 1.125rem;
+}
+
+h6, .h6 {
+    font-size: 0.9rem;
+}
+
+p {
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+.body-form {
+    height: calc(100vh - 80px);
+}
+
+.left {
+    padding-top: 1.5rem;
+    padding-left: 2.5rem;
+}
+
+.form-cointainer {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    border: #CED4DA 2px solid;
+    border-radius: 0.25rem;
+    background-color: #FFFFFF;
+    padding: .5rem;
+}
+.form-cointainer.is-invalid {
+    border-color: #ea4353;
+}
+.form-cointainer input {
+    width: 100%;
+    border: none;
+    border-radius: 0;
+    background-color: transparent;
+    padding: 0rem;
+    font-size: 1rem;
+    color: #495057;
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+.form-cointainer:focus-within {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.form-cointainer.is-invalid {
+    border-color: #eb1e13;
+    box-shadow: 0 0 0 0.2rem rgba(141, 65, 3, 0.25);
+}
+
+.form-cointainer input:focus {
+    outline: none;
+}
+
+.form-cointainer input::placeholder {
+    color: #CED4DA;
+}
+
+.slide-custom {
+    position: fixed;
+    width: 50%;
+    height: 100vh;
+}
+
+.slide-custom img {
+    width: 100%;
+    height: 100vh;
+    object-fit: cover;
+}
+
+.carousel-indicators {
+    position: absolute;
+    top: 70px !important;
+    /* left:  !important; */
+    z-index: 15;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: start;
+    padding-left: 0;
+    /* margin-right: 15%;
+    margin-left: 15%; */
+    list-style: none;
+}
+.form-sso {
+    z-index: 999;
+}
