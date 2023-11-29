@@ -373,11 +373,11 @@ class MasterAssetController extends Controller
 
                 // Tambahkan data baru ke dalam array $data
                 $newData = [
-                    'id' => 999, // Gantilah dengan nilai ID yang sesuai
-                    'text' => 'Data Baru',
+                    'id' => 0, // Gantilah dengan nilai ID yang sesuai
+                    'text' => 'Kosongkan',
                 ];
 
-                $data->push($newData);
+                $data->prepend($newData);
 
                 return response()->json([
                     'success' => true,
@@ -415,25 +415,33 @@ class MasterAssetController extends Controller
                 });
             }
 
-            $response1=DB::table('unit_kerja')
-                ->select('*')
-                ->where('flag',1)->get();
+            // $response1=DB::table('unit_kerja')
+            //     ->select('*')
+            //     ->where('flag',1)->get();
                 
-            $newData = $response1->map(function ($item) {
-                    return [
-                        'id' => $item->id,
-                        'text' => $item->unit_kerja,
-                    ];
-            });
+            // $newData = $response1->map(function ($item) {
+            //         return [
+            //             'id' => $item->id,
+            //             'text' => $item->unit_kerja,
+            //         ];
+            // });
 
             // Tambahkan hasil query sebagai data baru
-            foreach ($response1 as $item) {
-                $newData = [
-                    'id' => $item->id,
-                    'text' => $item->unit_kerja,
-                ];
-                $data->push($newData);
-            }
+            // foreach ($response1 as $item) {
+            //     $newData = [
+            //         'id' => $item->id,
+            //         'text' => $item->unit_kerja,
+            //     ];
+            //     $data->push($newData);
+            // }
+
+            // Tambahkan data baru ke dalam array $data
+            $newData = [
+                'id' => 0, // Gantilah dengan nilai ID yang sesuai
+                'text' => 'Kosongkan',
+            ];
+
+            $data->prepend($newData);
 
             return response()->json([
                 'success' => true,

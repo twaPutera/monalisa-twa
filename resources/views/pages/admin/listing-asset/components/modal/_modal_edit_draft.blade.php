@@ -71,7 +71,7 @@
                                 </select>
                             </div>
                             <div class="form-group col-md-4 col-6">
-                                <label for="">Asset Holderr</label>
+                                <label for="">Asset Holder</label>
                                 <select name="ownership" class="form-control" id="ownershipAssetEdit">
 
                                 </select>

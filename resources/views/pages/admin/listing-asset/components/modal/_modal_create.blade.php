@@ -71,17 +71,17 @@
                                 </select>
                             </div>
                             <div class="form-group col-md-4 col-6">
-                                <label for="">Asset Holder</label>
+                                <label for="">Asset Holder <button class="btn btn-sm btn-primary" type="button" onclick="resetForm()">Reset</button></label>
                                 <select name="ownership" class="form-control" id="ownershipAssetCreate" onchange="handleOwnershipChange()">
-
+                                    
                                 </select>
                             </div>
-                            <!-- <div class="form-group col-md-4 col-6">
-                                <label for="">Fungsi</label>
+                            <div class="form-group col-md-4 col-6">
+                                <label for="">Fungsi <button class="btn btn-sm btn-primary" type="button" onclick="resetForm()">Reset</button></label>
                                 <select name="unit_kerja" class="form-control" id="unit_kerja" onchange="handleUnitKerjaChange()">
-
+                                    
                                 </select>
-                            </div> -->
+                            </div>
                             <div class="form-group col-md-4 col-6">
                                 <label for="">Satuan</label>
                                 <select name="id_satuan_asset" class="form-control" id="satuanAssetCreate">
@@ -252,56 +252,82 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                    <button type="submit" class="btn btn-primary">Tambahh</button>
+                    <button type="submit" class="btn btn-primary">Tambah</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
 
-<script>
+
+<!-- <script>
+    function handleOwnershipChange() {
         var ownershipSelect = document.getElementById("ownershipAssetCreate");
         var unitKerjaSelect = document.getElementById("unit_kerja");
-        function handleOwnershipChange() {
-                // Disable ownership select
-                unitKerjaSelect.disabled = true;
-                // Clear previous selection in ownership
-                unitKerjaSelect.selectedIndex = 0;
-                // Display confirm dialog
-                var result = confirm("Anda telah memilih fungsi sebelumnya. Apakah Anda yakin ingin menggantinya?");
 
-                // If user clicks OK, enable ownership select
-                if (result) {
-                    ownershipSelect.selectedIndex = 0;
-                   
-                } else {
-                    unitKerjaSelect.disabled = false;
-                    // If user clicks Cancel, reset unit_kerja select
-                }
+        if (ownershipSelect.value !== "") {
+            unitKerjaSelect.disabled = true;
+        } else {
+            unitKerjaSelect.disabled = false;
         }
+    }
 
-        function handleUnitKerjaChange() {
-            // Disable ownership select
+    function handleUnitKerjaChange() {
+        var ownershipSelect = document.getElementById("ownershipAssetCreate");
+        var unitKerjaSelect = document.getElementById("unit_kerja");
+
+        if (unitKerjaSelect.value !== "") {
             ownershipSelect.disabled = true;
-
-            // Clear previous selection in ownership
-            ownershipSelect.selectedIndex = 0;
-
-            // Check if unit_kerja is selected
-            if (unitKerjaSelect.value !== "") {
-                // Display confirm dialog
-                var result = confirm("Anda telah memilih fungsi sebelumnya. Apakah Anda yakin ingin menggantinya?");
-
-                // If user clicks OK, enable ownership select
-                if (result) {
-                    ownershipSelect.disabled = false;
-                } else {
-                    // If user clicks Cancel, reset unit_kerja select
-                    unitKerjaSelect.selectedIndex = 0;
-                }
-            } else {
-                // Enable ownership select
-                ownershipSelect.disabled = false;
-            }
+        } else {
+            ownershipSelect.disabled = false;
         }
-    </script>
+    }
+</script> -->
+
+
+<script>
+    var initialOwnershipState;
+    var initialUnitKerjaState;
+
+    document.addEventListener("DOMContentLoaded", function () {
+        // Save the initial state of the selects when the page loads
+        initialOwnershipState = document.getElementById("ownershipAssetCreate").value;
+        initialUnitKerjaState = document.getElementById("unit_kerja").value;
+    });
+
+    function handleOwnershipChange() {
+        var ownershipSelect = document.getElementById("ownershipAssetCreate");
+        var unitKerjaSelect = document.getElementById("unit_kerja");
+
+        if (ownershipSelect.value !== "" && unitKerjaSelect.value != 0) {
+            unitKerjaSelect.disabled = true;
+        } else {
+            unitKerjaSelect.disabled = false;
+        }
+    }
+
+    function handleUnitKerjaChange() {
+        var ownershipSelect = document.getElementById("ownershipAssetCreate");
+        var unitKerjaSelect = document.getElementById("unit_kerja");
+        //alert(unitKerjaSelect.value);
+        if (unitKerjaSelect.value !== "" && unitKerjaSelect.value != 0) {
+            ownershipSelect.disabled = true;
+        }else{
+            ownershipSelect.disabled = false;
+        }
+    }
+
+    function resetForm() {
+        var ownershipSelect = document.getElementById("ownershipAssetCreate");
+        var unitKerjaSelect = document.getElementById("unit_kerja");
+
+        // Reset selects to their initial state
+        //ownershipSelect.value = "2";
+        //unitKerjaSelect.value = "2";
+        //unitKerjaSelect.selectedIndex = -1;
+
+        // Enable both selects
+        ownershipSelect.disabled = false;
+        unitKerjaSelect.disabled = false;
+    }
+</script>
