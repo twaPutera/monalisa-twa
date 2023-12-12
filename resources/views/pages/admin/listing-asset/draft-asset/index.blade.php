@@ -747,8 +747,10 @@
                     <button onclick="openModalByClass('modalImportAsset')" class="btn btn-success shadow-custom btn-sm mr-2"
                         type="button"><i class="fa fa-file"></i>
                         Import Data</button>
-                    <button onclick="openModalByClass('modalCreateAsset')" class="btn btn-primary shadow-custom btn-sm"
-                        type="button"><i class="fa fa-plus"></i> Add</button>
+                    <!-- <button onclick="openModalByClass('modalCreateAsset')" class="btn btn-primary shadow-custom btn-sm"
+                        type="button"><i class="fa fa-plus"></i> Add</button> -->
+                    <a href="{{route('admin.listing-asset.draft.add')}}" class="btn btn-primary shadow-custom btn-sm"
+                        type="button"><i class="fa fa-plus"></i>Add</a>
                 </div>
             </div>
             <div class="row">

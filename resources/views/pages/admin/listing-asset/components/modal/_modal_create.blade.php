@@ -29,7 +29,7 @@
                             <div class="form-group col-md-4 col-6">
                                 <label for="">Kelompok Aset</label>
                                 <select name="id_group_asset" class="form-control" id="groupAssetCreate">
-
+                                    
                                 </select>
                             </div>
                             <div class="form-group col-md-4 col-6">

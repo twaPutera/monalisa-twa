@@ -70,7 +70,7 @@ class LokasiQueryServices
     public function generateAllSelect2(Request $request)
     {
         $arraySelect2 = [];
-        if (! isset($request->keyword)) {
+        if (!isset($request->keyword)) {
             $arraySelect2[] = [
                 'id' => 'root',
                 'text' => 'Universitas Pertamina',

@@ -125,6 +125,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/datatable', [MasterAssetController::class, 'datatable'])->name('admin.listing-asset.datatable');
         Route::get('/datatable-report', [MasterAssetController::class, 'datatableReport'])->name('admin.listing-asset.datatable.report');
         Route::post('/store', [MasterAssetController::class, 'store'])->name('admin.listing-asset.store');
+        Route::post('/store-twa', [MasterAssetController::class, 'store_twa'])->name('admin.listing-asset.store.twa');
         Route::get('/show/{id}', [MasterAssetController::class, 'show'])->name('admin.listing-asset.show');
         Route::get('/detail/{id}', [MasterAssetController::class, 'detail'])->name('admin.listing-asset.detail');
         Route::post('/update/{id}', [MasterAssetController::class, 'update'])->name('admin.listing-asset.update');
@@ -141,9 +142,12 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/download-qr-all', [MasterAssetController::class, 'downloadZipQr'])->name('admin.listing-asset.download-qr-all');
         Route::get('/print-qr-all', [MasterAssetController::class, 'printAllQr'])->name('admin.listing-asset.print-qr-all');
         Route::get('/get-no-urut-by-kelompok-id/{id}/{id_asset?}', [MasterAssetController::class, 'getMaxValueNoUrutAssetByKelompokId'])->name('admin.listing-asset.get-no-urut-by-kelompok-id');
+        Route::get('/get-no-urut-by-kelompok-id-twa/{id}', [MasterAssetController::class, 'getNoUrutTwa'])->name('admin.listing-asset.get-no-urut-by-kelompok-id.twa');
 
         Route::group(['prefix' => 'draft'], function () {
             Route::get('/', [MasterAssetController::class, 'indexDraft'])->name('admin.listing-asset.draft.index');
+            Route::get('/add', [MasterAssetController::class, 'addDraft'])->name('admin.listing-asset.draft.add'); //wahyu tambah
+            Route::get('/get-jenis-aset/{group}', [MasterAssetController::class, 'getJenisAset'])->name('get.jenis.aset'); //wahyu tambah
             Route::post('/delete-many-asset', [MasterAssetController::class, 'deleteManyAsset'])->name('admin.listing-asset.draft.delete-many-asset');
             Route::post('/delete-all-draft-asset', [MasterAssetController::class, 'deleteAllDraftAsset'])->name('admin.listing-asset.draft.delete-all-draft-asset');
             Route::post('/publish-many-asset', [MasterAssetController::class, 'publishManyAsset'])->name('admin.listing-asset.draft.publish-many-asset');

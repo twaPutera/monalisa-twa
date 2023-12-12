@@ -26,6 +26,8 @@ use App\Http\Requests\AssetData\AssetDataDeleteRequest;
 use App\Http\Requests\AssetData\AssetDataPublishRequest;
 use App\Http\Requests\AssetData\AssetUpdateDraftRequest;
 use App\Services\AssetService\AssetServiceQueryServices;
+use App\Models\Lokasi;
+use App\Models\SistemConfig;
 
 class MasterAssetController extends Controller
 {
@@ -767,5 +769,191 @@ class MasterAssetController extends Controller
                 'message' => $th->getMessage(),
             ]);
         }
+    }
+
+    public function addDraft(){
+        $listKelompokAsset = DB::table('group_kategori_assets')->get();
+
+        $satuan = DB::table('satuan_assets')->get();
+
+        $unit_kerja = DB::table('unit_kerja')->get();
+
+        $kelas_assets = DB::table('kelas_assets')->get();
+
+        $ownership = DB::table('users')->get();
+
+        $vendors = DB::table('vendors as a')
+            ->join('asset_data as b', 'a.id', '=', 'b.id_vendor')
+            ->groupBy('a.id','a.nama_vendor')
+            ->select('a.id', 'a.nama_vendor')
+            ->get();
+
+        $lokasi = Lokasi::query();
+        $lokasi = $lokasi->where('id_parent_lokasi', null)
+            ->get();
+        foreach ($lokasi as $item) {
+            $arraySelect2[] = [
+                'id' => $item->id,
+                'text' => '- ' . $item->nama_lokasi,
+            ];
+            $arraySelect2 = array_merge($arraySelect2, $this->getSelect2Children($item->id, 2));
+        }
+
+        //dd($arraySelect2[0]['text']);
+        // foreach($arraySelect2 as $row){
+        //     dd($row["text"]);
+        // }
+
+        $list_status = StatusAssetDataHelpers::listStatusAssetData();
+        //dd($list_status);
+
+
+        return view('pages.admin.listing-asset.draft-asset.twa_add_draft')
+        ->with('vendors',$vendors)
+        ->with('satuan',$satuan)
+        ->with('list_status',$list_status)
+        ->with('kelas_assets',$kelas_assets)
+        ->with('unit_kerja',$unit_kerja)
+        ->with('ownership',$ownership)
+        ->with('lokasi',$arraySelect2)
+        ->with('listKelompokAsset',$listKelompokAsset);
+    }
+
+    public function getSelect2Children($id_parent_lokasi, $iterasi)
+    {
+        $strip = str_repeat('-', $iterasi);
+        $arraySelect2 = [];
+        $lokasi = Lokasi::query();
+
+        $lokasi = $lokasi->where('id_parent_lokasi', $id_parent_lokasi)->get();
+        $iterasi++;
+        foreach ($lokasi as $item) {
+            $arraySelect2[] = [
+                'id' => $item->id,
+                'text' => $strip . ' ' . $item->nama_lokasi,
+            ];
+            $arraySelect2 = array_merge($arraySelect2, $this->getSelect2Children($item->id, $iterasi));
+        }
+        return $arraySelect2;
+    }
+
+    public function getJenisAset($group)
+    {
+        // Di sini, Anda dapat menggantinya dengan logika database atau logika lainnya
+        // untuk mendapatkan jenis aset berdasarkan kelompok yang dipilih
+
+        // Contoh data simulasi
+        $data = DB::table('kategori_assets')->where('id_group_kategori_asset', '=', "$group")->get();
+
+        // Kembalikan data dalam format JSON
+        return response()->json($data);
+    }
+
+    public function getNoUrutTwa($id_kategori_asset){
+        $asset =  DB::table('asset_data')
+        ->where('id_kategori_asset', $id_kategori_asset)
+        ->whereRaw('no_urut REGEXP "^([,|.]?[0-9])+$"')
+        ->max('no_urut');
+
+        $no_urut_config = DB::table('sistem_configs')
+            ->where('config', 'min_no_urut')
+            ->first();
+
+        $config = $no_urut_config->value ?? 5;
+
+        $no = 1;
+
+        if (isset($asset)) {
+            $no = $asset + 1;
+
+            // if ($id_asset != null) {
+            //     $plus_one = AssetData::where('id', $id_asset)
+            //         ->where('id_kategori_asset', $id)
+            //         ->where('no_urut', $asset)
+            //         ->first();
+            //     if ($plus_one) {
+            //         $no = $asset;
+            //     }
+            // }
+        }
+
+        $no_urut = str_pad($no, $config, '0', STR_PAD_LEFT);
+
+        return response()->json(['no_urut' => $no_urut]);
+    }
+
+    public function store_twa(AssetStoreRequest $request)
+    {
+        // $min_no_urut = SistemConfig::where('config', 'min_no_urut')->first();
+        // $min_no_urut = $min_no_urut->value ?? '5';
+        // //dd($request);
+        // $validatedData = $request->validate([
+        //     'kode_asset' => 'required|string|unique:asset_data,kode_asset|max:255',
+        //     'id_vendor' => 'nullable|uuid|exists:vendors,id',
+        //     'id_lokasi' => 'nullable|uuid|exists:lokasis,id',
+        //     'id_kelas_asset' => 'nullable|uuid|exists:kelas_assets,id',
+        //     'id_group_asset' => 'required',
+        //     'id_kategori_asset' => 'required|uuid|exists:kategori_assets,id',
+        //     'id_satuan_asset' => 'required|uuid|exists:satuan_assets,id',
+        //     'deskripsi' => 'required|string|max:255',
+        //     'tanggal_perolehan' => 'required|date',
+        //     //perubahan oleh wahyu
+        //     'tanggal_pelunasan' => 'nullable|date',
+        //     //'nilai_perolehan' => 'required|numeric',
+        //     'nilai_perolehan' => 'nullable|numeric', //tambahan wahyu
+        //     // 'nilai_buku_asset' => 'required|numeric|lte:nilai_perolehan',
+        //     'jenis_penerimaan' => 'required|string|max:255|in:PO,Hibah Eksternal,Hibah Penelitian,Hibah Perorangan,UMK,CC,Reimburse',
+        //     //'ownership' => 'nullable|uuid',
+        //     'ownership' => 'nullable', //tambahan dari wahyu
+        //     // 'tgl_register' => 'required|date|date_format:Y-m-d',
+        //     // 'register_oleh' => 'required|uuid',
+        //     'no_memo_surat' => 'nullable|string|max:50',
+        //     'no_memo_surat_manual' => 'nullable|required_if:status_memorandum,manual|string|max:50',
+        //     'id_surat_memo_andin' => 'nullable|required_if:status_memorandum,andin|uuid',
+        //     'status_memorandum' => 'required|string|in:andin,manual,tidak-ada',
+        //     'no_po' => 'nullable|string|max:50',
+        //     'no_sp3' => 'nullable|string|max:50',
+        //     'status_kondisi' => 'required|string|max:50',
+        //     'status_akunting' => 'required|string|max:50',
+        //     'no_seri' => 'nullable|string|max:50',
+        //     'no_urut' => 'nullable|string|max:50|min:' . $min_no_urut,
+        //     'cost_center' => 'nullable|string|max:255',
+        //     'call_center' => 'nullable|string|max:50',
+        //     'spesifikasi' => 'required|string|max:255',
+        //     'status_kondisi' => 'required|string|max:50',
+        //     // 'nilai_depresiasi' => 'required|numeric',
+        //     // 'umur_manfaat_fisikal' => 'nullable|numeric',
+        //     // 'umur_manfaat_komersial' => 'nullable|numeric',
+        //     // 'gambar_asset' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        //     'gambar_asset' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:10048',
+        //     'is_sparepart' => 'nullable|in:0,1',
+        //     'is_pinjam' => 'nullable|in:0,1',
+        //     'is_it' => 'nullable|in:0,1',
+        //     'asal_asset' => 'nullable|string|uuid',
+        // ]);
+
+        DB::beginTransaction();
+        try {
+            $data = $this->assetDataCommandServices->store($request);
+            DB::commit();
+            // return response()->json([
+            //     'success' => true,
+            //     'message' => 'Berhasil menambahkan data asset',
+            //     'data' => $data,
+            // ],202)->header('Location', route('admin.listing-asset.draft.index'));
+            return redirect()->route('admin.listing-asset.draft.index');
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+            ]);
+        }
+        
+
+        // Proses penyimpanan data jika validasi berhasil
+        // ...
+
+        //return redirect()->route('admin.listing-asset.draft.index');
     }
 }
