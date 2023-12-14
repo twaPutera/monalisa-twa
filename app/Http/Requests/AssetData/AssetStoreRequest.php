@@ -38,6 +38,7 @@ class AssetStoreRequest extends FormRequest
             'deskripsi' => 'required|string|max:255',
             'tanggal_perolehan' => 'required|date',
             //perubahan oleh wahyu
+            'unit_kerja' => 'required',
             'tanggal_pelunasan' => 'nullable|date',
             //'nilai_perolehan' => 'required|numeric',
             'nilai_perolehan' => 'nullable|numeric', //tambahan wahyu

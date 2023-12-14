@@ -388,8 +388,7 @@
                                                     Upload
                                                     <input type="file" id="gambar_asset"
                                                         accept=".jpeg,.png,.jpg,.gif,.svg" class="d-none"
-                                                        name="gambar_asset" value="{{ old('gambar_asset') }}">
-                                                       
+                                                        name="gambar_asset" value="{{ old('gambar_asset') }}">   
                                                 </label>
                                                 @error('gambar_asset')
                                                     <br><div class="invalid-feedback">{{ $message }}</div>

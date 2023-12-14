@@ -14,6 +14,7 @@ use App\Models\PerencanaanServices;
 use App\Models\DetailPemindahanAsset;
 use App\Services\User\UserQueryServices;
 use App\Services\UserSso\UserSsoQueryServices;
+use Illuminate\Support\Facades\DB;
 
 class AssetDataQueryServices
 {
@@ -964,10 +965,16 @@ class AssetDataQueryServices
 
     public function getMaxValueNoUrutAssetByKelompokId(string $id, string $id_asset = null)
     {
+        // $asset = AssetData::query()
+        //     ->where('id_kategori_asset', $id)
+        //     ->whereRaw('no_urut REGEXP "^([,|.]?[0-9])+$"')
+        //     ->max('no_urut');
+
+        //query update dari wahyu
         $asset = AssetData::query()
             ->where('id_kategori_asset', $id)
-            ->whereRaw('no_urut REGEXP "^([,|.]?[0-9])+$"')
-            ->max('no_urut');
+            ->whereRaw('no_urut REGEXP ?', ['^([,|.]?[0-9])+$'])
+            ->max(DB::raw('CAST(no_urut AS SIGNED)'));
 
         $no_urut_config = SistemConfig::query()
             ->where('config', 'min_no_urut')
@@ -980,6 +987,7 @@ class AssetDataQueryServices
         if (isset($asset)) {
             $no = $asset + 1;
 
+           // ditutup oleh wahyu sementara karena menyebabkan duplicate kode asset
             if ($id_asset != null) {
                 $plus_one = AssetData::where('id', $id_asset)
                     ->where('id_kategori_asset', $id)

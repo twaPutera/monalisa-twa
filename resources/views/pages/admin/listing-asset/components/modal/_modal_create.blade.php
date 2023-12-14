@@ -71,21 +71,9 @@
                                 </select>
                             </div>
                             <div class="form-group col-md-4 col-6">
-                                <label for="">Asset Holder <button class="btn btn-sm btn-primary" type="button" onclick="resetForm()">Reset</button></label>
-                                <select name="ownership" class="form-control" id="ownershipAssetCreate" onchange="handleOwnershipChange()">
+                                <label for="">Fungsi</label>
+                                <select name="unit_kerja" class="form-control" id="unit_kerja">
                                     
-                                </select>
-                            </div>
-                            <div class="form-group col-md-4 col-6">
-                                <label for="">Fungsi <button class="btn btn-sm btn-primary" type="button" onclick="resetForm()">Reset</button></label>
-                                <select name="unit_kerja" class="form-control" id="unit_kerja" onchange="handleUnitKerjaChange()">
-                                    
-                                </select>
-                            </div>
-                            <div class="form-group col-md-4 col-6">
-                                <label for="">Satuan</label>
-                                <select name="id_satuan_asset" class="form-control" id="satuanAssetCreate">
-
                                 </select>
                             </div>
                             <div class="form-group col-md-4 col-6">
@@ -103,6 +91,20 @@
                                     <option data-asset-lama="0" value="Reimburse">Reimburse</option>
                                 </select>
                             </div>
+                           
+                            <div class="form-group col-md-4 col-6">
+                                <label for="">Satuan</label>
+                                <select name="id_satuan_asset" class="form-control" id="satuanAssetCreate">
+
+                                </select>
+                            </div>
+                            <div class="form-group col-md-4 col-6">
+                                <label for="">Asset Holder</label>
+                                <select name="ownership" class="form-control" id="ownershipAssetCreate">
+                                    
+                                </select>
+                            </div>
+                           
                             {{-- <div class="form-group col-md-4 col-6">
                                 <label for="">Nilai Buku (Rp)</label>
                                 <input type="number" class="form-control" name="nilai_buku_asset">

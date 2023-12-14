@@ -85,4 +85,9 @@ class AssetData extends Model
     {
         return $this->hasMany(DepresiasiAsset::class, 'id_asset_data', 'id');
     }
+
+    public function unit_kerja()
+    {
+        return $this->belongsTo(Unit_kerja::class, 'id_unit_kerja', 'id');
+    }
 }

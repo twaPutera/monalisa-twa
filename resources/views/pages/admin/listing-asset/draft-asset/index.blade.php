@@ -183,6 +183,9 @@
                     },
                     {
                         data: 'updated_at'
+                    },
+                    {
+                        data: 'nama_unit_kerja'
                     }
                 ],
                 columnDefs: [{
@@ -260,6 +263,12 @@
                         targets: 11,
                         render: function(data, type, full, meta) {
                             return formatNumber(data);
+                        }
+                    },
+                    {
+                        targets: 19,
+                        render: function(data, type, full, meta) {
+                            return data;
                         }
                     }
                 ],
@@ -747,10 +756,10 @@
                     <button onclick="openModalByClass('modalImportAsset')" class="btn btn-success shadow-custom btn-sm mr-2"
                         type="button"><i class="fa fa-file"></i>
                         Import Data</button>
-                    <!-- <button onclick="openModalByClass('modalCreateAsset')" class="btn btn-primary shadow-custom btn-sm"
-                        type="button"><i class="fa fa-plus"></i> Add</button> -->
-                    <a href="{{route('admin.listing-asset.draft.add')}}" class="btn btn-primary shadow-custom btn-sm"
-                        type="button"><i class="fa fa-plus"></i>Add</a>
+                    <button onclick="openModalByClass('modalCreateAsset')" class="btn btn-primary shadow-custom btn-sm"
+                        type="button"><i class="fa fa-plus"></i> Add</button>
+                    <!-- <a href="{{route('admin.listing-asset.draft.add')}}" class="btn btn-primary shadow-custom btn-sm"
+                        type="button"><i class="fa fa-plus"></i>Add</a> -->
                 </div>
             </div>
             <div class="row">
@@ -782,6 +791,7 @@
                                     <th width="150px">Satuan</th>
                                     <th width="150px">Vendor</th>
                                     <th width="150px">Last Update</th>
+                                    <th width="150px">Fungsi</th>
                                 </tr>
                             </thead>
                             <tbody>

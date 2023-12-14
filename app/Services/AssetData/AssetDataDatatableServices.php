@@ -4,6 +4,7 @@ namespace App\Services\AssetData;
 
 use App\Models\Lokasi;
 use App\Models\Vendor;
+use App\Models\Unit_kerja;
 use App\Models\LogAsset;
 use App\Models\AssetData;
 use App\Models\AssetImage;
@@ -32,7 +33,7 @@ class AssetDataDatatableServices
     public function datatable(Request $request)
     {
         $query = AssetData::query();
-        $query->with(['satuan_asset', 'vendor', 'lokasi', 'kelas_asset', 'kategori_asset', 'kategori_asset.group_kategori_asset', 'image']);
+        $query->with(['unit_kerja','satuan_asset', 'vendor', 'lokasi', 'kelas_asset', 'kategori_asset', 'kategori_asset.group_kategori_asset', 'image']);
         $filter = $request->toArray();
 
         if (isset($request->searchKeyword)) {
@@ -220,6 +221,14 @@ class AssetDataDatatableServices
             if (18 == $order_column_index) {
                 $query->orderBy('updated_at', $order_column_dir);
             }
+            if (19 == $order_column_index) {
+                $subquery = Unit_kerja::select('unit_kerjas.id')
+                    ->whereColumn('unit_kerjas.id', 'asset_data.id_unit_kerja')
+                    ->orderBy('nama_unit_kerja', $order_column_dir)
+                    ->limit(1);
+
+                $query->orderByRaw('(' . $subquery->toSql() . ') ' . $order_column_dir, $subquery->getBindings());
+            }
             // END SORT DRAFT
         }
 
@@ -299,6 +308,14 @@ class AssetDataDatatableServices
             if (17 == $order_column_index) {
                 $query->orderBy('updated_at', $order_column_dir);
             }
+            // if (19 == $order_column_index) {
+            //     $subquery = Unit_kerja::select('unit_kerjas.id')
+            //         ->whereColumn('unit_kerjas.id', 'asset_data.unit_kerja')
+            //         ->orderBy('nama_unit_kerja', $order_column_dir)
+            //         ->limit(1);
+
+            //     $query->orderByRaw('(' . $subquery->toSql() . ') ' . $order_column_dir, $subquery->getBindings());
+            // }
             // END SORT GENERAL
         }
 
@@ -312,6 +329,9 @@ class AssetDataDatatableServices
             })
             ->addColumn('nama_vendor', function ($item) {
                 return $item->vendor->nama_vendor ?? 'Tidak ada Vendor';
+            })
+            ->addColumn('nama_unit_kerja', function ($item) {
+                return $item->unit_kerja->nama_unit_kerja ?? 'Tidak ada unit kerja';
             })
             ->addColumn('nama_satuan', function ($item) {
                 return $item->satuan_asset->nama_satuan ?? 'Tidak ada Satuan';
