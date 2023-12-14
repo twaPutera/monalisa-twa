@@ -363,13 +363,13 @@ class MasterAssetController extends Controller
     {
         try {
                 //$response = $this->userQueryServices->findAll($request);
-                $response=DB::table('unit_kerja')
+                $response=DB::table('unit_kerjas')
                 ->select('*')
                 ->where('flag',1)->get();
                 $data = $response->map(function ($item) {
                     return [
                         'id' => $item->id,
-                        'text' => $item->unit_kerja,
+                        'text' => $item->nama_unit_kerja,
                     ];
                 });
 
