@@ -17,6 +17,7 @@ use Yajra\DataTables\DataTables;
 use App\Services\User\UserQueryServices;
 use Yajra\DataTables\Contracts\DataTable;
 use App\Services\UserSso\UserSsoQueryServices;
+use Illuminate\Support\Facades\DB;
 
 class AssetDataDatatableServices
 {
@@ -28,6 +29,21 @@ class AssetDataDatatableServices
     {
         $this->userSsoQueryServices = new UserSsoQueryServices();
         $this->userQueryServices = new UserQueryServices();
+    }
+
+    public function getChildLokasi($id = null, array &$childs = []){
+        $response1=DB::table('lokasis')
+        ->select('id')
+        ->where('id_parent_lokasi',$id)->get();
+
+        if(count($response1)>0){
+            foreach ($response1 as $row) {
+                $childs[] = $row->id;
+            }
+        }
+
+        return $childs;
+
     }
 
     public function datatable(Request $request)
@@ -66,7 +82,17 @@ class AssetDataDatatableServices
         }
 
         if (isset($request->id_lokasi) && $request->id_lokasi != 'root') {
-            $query->where('id_lokasi', $request->id_lokasi);
+           
+            $all_childs =[];
+            $childs = $this->getChildLokasi($request->id_lokasi);
+            if(count($childs) > 0){
+                $all_childs = array_merge( $all_childs, $childs);
+                $query->whereIn('id_lokasi', $all_childs);  
+            }else{
+                $query->where('id_lokasi', $request->id_lokasi);
+            }
+            //$query->where('id_lokasi', $request->id_lokasi);
+           
         }
 
         if (isset($request->id_kelas_asset)) {

@@ -1000,7 +1000,6 @@ class AssetDataQueryServices
         }
 
         $no_urut = str_pad($no, $config, '0', STR_PAD_LEFT);
-
         return $no_urut;
     }
 }

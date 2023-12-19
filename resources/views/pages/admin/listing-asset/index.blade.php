@@ -57,6 +57,7 @@
                 },
                 "plugins": ["dnd", "types", "search", "adv_search"]
             }).on('changed.jstree', function(e, data) {
+                //alert(table.DataTable().ajax);
                 $('#lokasiFilterAktif').text(data.node.text);
                 $('#lokasiParentId').val(data.selected[0]);
                 table.DataTable().ajax.reload();
@@ -130,6 +131,7 @@
                         d.is_sparepart = $('#isSparepartFilter').val();
                         d.is_pemutihan = $('#isPemutihanFilter').val();
                         d.is_draft = '0';
+                        alert(d.id_lokasi);
                     }
                 },
                 columns: [{
