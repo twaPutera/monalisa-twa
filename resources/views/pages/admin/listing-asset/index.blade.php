@@ -131,7 +131,7 @@
                         d.is_sparepart = $('#isSparepartFilter').val();
                         d.is_pemutihan = $('#isPemutihanFilter').val();
                         d.is_draft = '0';
-                        alert(d.id_lokasi);
+                        //alert(d.id_lokasi);
                     }
                 },
                 columns: [{
