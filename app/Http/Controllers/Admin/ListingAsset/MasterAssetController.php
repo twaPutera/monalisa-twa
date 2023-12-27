@@ -362,10 +362,8 @@ class MasterAssetController extends Controller
     public function getDataAllUnitkerjaSelect2(Request $request)
     {
         try {
-                //$response = $this->userQueryServices->findAll($request);
-                $response=DB::table('unit_kerjas')
-                ->select('*')
-                ->where('flag',1)->get();
+                $response = $this->userQueryServices->findUnitKerja($request);
+               
                 $data = $response->map(function ($item) {
                     return [
                         'id' => $item->id,
@@ -776,11 +774,13 @@ class MasterAssetController extends Controller
 
         $satuan = DB::table('satuan_assets')->get();
 
-        $unit_kerja = DB::table('unit_kerja')->get();
+        $unit_kerja = DB::table('unit_kerjas')->get();
 
         $kelas_assets = DB::table('kelas_assets')->get();
 
         $ownership = DB::table('users')->get();
+
+        $jenis_asset = DB::table('kategori_assets')->get();
 
         $vendors = DB::table('vendors as a')
             ->join('asset_data as b', 'a.id', '=', 'b.id_vendor')
@@ -807,6 +807,7 @@ class MasterAssetController extends Controller
         $list_status = StatusAssetDataHelpers::listStatusAssetData();
         //dd($list_status);
 
+        //dd(AssetData::where('kode_asset', '45100878')->exists());
 
         return view('pages.admin.listing-asset.draft-asset.twa_add_draft')
         ->with('vendors',$vendors)
@@ -816,7 +817,18 @@ class MasterAssetController extends Controller
         ->with('unit_kerja',$unit_kerja)
         ->with('ownership',$ownership)
         ->with('lokasi',$arraySelect2)
-        ->with('listKelompokAsset',$listKelompokAsset);
+        ->with('listKelompokAsset',$listKelompokAsset)
+        ->with('jenis_asset',$jenis_asset);
+    }
+
+    public function checkDuplicateAssetCode(Request $request)
+    {
+        $kodeAsset = $request->kode_asset;
+
+        // Lakukan pengecekan duplikat
+        $exists = AssetData::where('kode_asset', $kodeAsset)->exists();
+
+        return response()->json(['exists' => $exists]);
     }
 
     public function getSelect2Children($id_parent_lokasi, $iterasi)
@@ -941,6 +953,7 @@ class MasterAssetController extends Controller
             //     'message' => 'Berhasil menambahkan data asset',
             //     'data' => $data,
             // ],202)->header('Location', route('admin.listing-asset.draft.index'));
+            session()->flash('success', 'Berhasil menambahkan data asset');
             return redirect()->route('admin.listing-asset.draft.index');
         } catch (\Exception $e) {
             DB::rollback();

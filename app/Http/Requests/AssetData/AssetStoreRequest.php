@@ -36,7 +36,7 @@ class AssetStoreRequest extends FormRequest
             'id_kategori_asset' => 'required|uuid|exists:kategori_assets,id',
             'id_satuan_asset' => 'required|uuid|exists:satuan_assets,id',
             'deskripsi' => 'required|string|max:255',
-            'tanggal_perolehan' => 'required|date',
+            'tanggal_perolehan' => 'nullable|date',
             //perubahan oleh wahyu
             'unit_kerja' => 'required',
             'tanggal_pelunasan' => 'nullable|date',

@@ -116,7 +116,12 @@
                                     <div class="form-group col-md-4 col-6">
                                         <label for="">Jenis Asset</label>
                                         <select name="id_kategori_asset" onchange="getNoUrutByKelompok(this)" class="form-control" id="kategoriAssetCreate">
-                                        
+                                            <option value="" disabled selected>Pilih Jenis</option>
+                                            @foreach($jenis_asset as $row)
+                                            <option value="{{$row->id}}" {{ old('id_kategori_asset') == $row->id ? 'selected' : '' }}>
+                                                {{$row->nama_kategori}}
+                                            </option>
+                                            @endforeach
                                         </select>
                                         @error('id_kategori_asset')
                                             <div class="invalid-feedback">{{ $message }}</div>
@@ -176,18 +181,18 @@
                                         @enderror
                                     </div>
                                     <div class="form-group col-md-4 col-6">
-                                        <label for="">Asset Holder Perorangan & Fungsi <button class="btn btn-sm btn-primary" type="button" onclick="resetForm()">Reset</button></label>
-                                        <select name="ownership" class="form-control" id="ownershipAssetCreate" onchange="handleOwnershipChange(this)">
-                                        <option value="" selected>Pilih Ownership</option>
-                                            @foreach($ownership as $row)
-                                                <option value="{{$row->id}}">{{$row->name}} - {{$row->email}}</option>
+                                        <label for="">Fungsi</label>
+                                        <select name="unit_kerja" class="form-control" id="unit_kerja">
+                                        <option value="" selected>Pilih Fungsi</option>
+                                            @foreach($unit_kerja as $row)
+                                            <option value="{{$row->id}}" {{ old('unit_kerja') == $row->id ? 'selected' : '' }}>{{$row->nama_unit_kerja}}</option>
                                             @endforeach
-                                            
                                         </select>
-                                        @error('ownership')
+                                        @error('unit_kerja')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
+                                  
                                     <div class="form-group col-md-4 col-6">
                                         <label for="">Jenis Perolehan</label>
                                         <!-- bagian ini telah diupdate oleh wahyu -->
@@ -212,23 +217,24 @@
                                         <select name="id_satuan_asset" class="form-control" id="satuanAssetCreate">
                                         <option value="" disabled selected>Pilih Satuan</option>
                                             @foreach($satuan as $row)
-                                            <option value="{{$row->id}}" {{ old('id_satuan_asset') == '' ? 'selected' : '' }}>{{$row->nama_satuan}}</option>
+                                            <option value="{{$row->id}}" {{ old('id_satuan_asset') == $row->id ? 'selected' : '' }}>{{$row->nama_satuan}}</option>
                                             @endforeach
                                         </select>
                                         @error('id_satuan_asset')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                    
+                                  
                                     <div class="form-group col-md-4 col-6">
-                                        <label for=""></label>
-                                        <select name="ownership" class="form-control" id="unit_kerja" onchange="handleUnitKerjaChange(this)">
-                                        <option value="" selected>Pilih Fungsi</option>
-                                            @foreach($unit_kerja as $row)
-                                            <option value="{{$row->id}}">{{$row->unit_kerja}}</option>
+                                        <label for="">Asset Holder</label>
+                                        <select name="ownership" class="form-control" id="ownershipAssetCreate" >
+                                        <option value="" selected>Pilih Ownership</option>
+                                            @foreach($ownership as $row)
+                                                <option value="{{$row->id}}" {{ old('ownership') == $row->id ? 'selected' : '' }}>{{$row->name}} - {{$row->email}}</option>
                                             @endforeach
+                                            
                                         </select>
-                                        @error('unit_kerja')
+                                        @error('ownership')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
@@ -330,7 +336,7 @@
                                         </div> --}}
                                         <div class="form-group">
                                             <label for="">Spesifikasi</label>
-                                            <textarea value="{{ old('spesifikasi')}}" name="spesifikasi" class="form-control" id="" cols="30" rows="10"></textarea>
+                                            <textarea value="{{ old('spesifikasi')}}" name="spesifikasi" class="form-control" id="" cols="30" rows="10">{{ old('spesifikasi')}}</textarea>
                                             @error('spesifikasi')
                                                     <br><div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
@@ -343,7 +349,7 @@
                                             <select name="id_kelas_asset" class="form-control" id="kelasAssetCreate">
                                                 <option value="" disabled selected>Pilih Kelas</option>
                                                 @foreach($kelas_assets as $row)
-                                                    <option value="{{$row->id}}" {{ old('id_kelas_asset') == '' ? 'selected' : '' }}>
+                                                    <option value="{{$row->id}}" {{ old('id_kelas_asset') == $row->id ? 'selected' : '' }}>
                                                         {{$row->nama_kelas}} ({{$row->no_akun}})
                                                     </option>
                                                 @endforeach
@@ -372,7 +378,7 @@
                                                 <select name="status_akunting" class="form-control mr-3 status_akunting"
                                                     style="width: 60%;" id="status_akunting">
                                                     @foreach ($list_status as $key => $item)
-                                                        <option value="{{ $key }}" {{ old('status_akunting') == '' ? 'selected' : '' }}>{{ $item }}</option>
+                                                        <option value="{{ $key }}" {{ old('status_akunting') == $key ? 'selected' : '' }}>{{ $item }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -381,7 +387,13 @@
                                             <label for="">Gambar Asset</label>
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <div>
-                                                    <span id="preview-file-text">No File Choosen</span> <br>
+                                                <span id="preview-file-text">
+                                                    @if(old('gambar_asset'))
+                                                        {{ old('gambar_asset')->getClientOriginalName() }}
+                                                    @else
+                                                        No File Choosen
+                                                    @endif
+                                                </span><br>
                                                     <span id="preview-file-error" class="text-danger"></span>
                                                 </div>
                                                 <label for="gambar_asset" class="btn btn-primary">
@@ -588,5 +600,23 @@
         document.getElementById("ownershipAssetCreate").setAttribute("disabled", "disabled");
         }
     }
+
+
+    function changeMemorandumStatus(v) {
+            const memoAndin = $('#memo_andin');
+            const memoManual = $('#memo_manual');
+            if (v == "andin") {
+                memoAndin.removeClass('d-none');
+                memoManual.addClass('d-none');
+            } else if (v == "manual") {
+                memoManual.removeClass('d-none');
+                memoAndin.addClass('d-none');
+            } else {
+                memoAndin.addClass('d-none');
+                memoManual.addClass('d-none');
+            }
+        }
 </script>
+
+
 @endsection

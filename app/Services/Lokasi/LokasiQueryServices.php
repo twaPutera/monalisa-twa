@@ -46,7 +46,7 @@ class LokasiQueryServices
                 'id' => 'root',
                 'text' => '(Parent) Universitas Pertamina',
             ];
-        } else {
+        }else{
             $parentLokasi = Lokasi::query()
                 ->where('id', $id_parent_lokasi)
                 ->first();
@@ -70,7 +70,7 @@ class LokasiQueryServices
     public function generateAllSelect2(Request $request)
     {
         $arraySelect2 = [];
-        if (!isset($request->keyword)) {
+        if (!isset($request->keyword)){
             $arraySelect2[] = [
                 'id' => 'root',
                 'text' => 'Universitas Pertamina',
@@ -92,8 +92,8 @@ class LokasiQueryServices
             }
         }
 
-        $lokasi = $lokasi->where('id_parent_lokasi', null)
-            ->get();
+        $lokasi = $lokasi->where('id_parent_lokasi', null)->get();
+        
         foreach ($lokasi as $item) {
             $arraySelect2[] = [
                 'id' => $item->id,
@@ -115,7 +115,7 @@ class LokasiQueryServices
         }
         $lokasi = $lokasi->where('id_parent_lokasi', $id_parent_lokasi)->get();
         $iterasi++;
-        foreach ($lokasi as $item) {
+        foreach ($lokasi as $item){
             $arraySelect2[] = [
                 'id' => $item->id,
                 'text' => $strip . ' ' . $item->nama_lokasi,

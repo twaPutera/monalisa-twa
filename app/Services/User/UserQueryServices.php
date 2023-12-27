@@ -5,9 +5,19 @@ namespace App\Services\User;
 use App\Models\User;
 use App\Helpers\CutText;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class UserQueryServices
 {
+    public function findUnitKerja(Request $request){
+        $response=DB::table('unit_kerjas')
+        ->select('*');
+        if($request->has('keyword')){
+            $response->where('nama_unit_kerja', 'like', '%' . $request->keyword . '%');
+        }
+        return $response->get();
+    }
+
     public function findAll(Request $request)
     {
         $users = User::query();

@@ -987,7 +987,7 @@ class AssetDataQueryServices
         if (isset($asset)) {
             $no = $asset + 1;
 
-           // ditutup oleh wahyu sementara karena menyebabkan duplicate kode asset
+          
             if ($id_asset != null) {
                 $plus_one = AssetData::where('id', $id_asset)
                     ->where('id_kategori_asset', $id)

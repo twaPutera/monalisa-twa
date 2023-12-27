@@ -66,6 +66,7 @@ class AssetDataCommandServices
         $asset->tanggal_perolehan = $request->tanggal_perolehan;
         $asset->tgl_pelunasan = $request->tanggal_pelunasan;
         $asset->nilai_perolehan = $request->nilai_perolehan;
+        $asset->id_unit_kerja = $request->unit_kerja;
         $asset->nilai_buku_asset = $request->nilai_perolehan;
         $asset->jenis_penerimaan = $request->jenis_penerimaan;
         $asset->ownership = $request->ownership;

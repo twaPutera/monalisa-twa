@@ -147,6 +147,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::group(['prefix' => 'draft'], function () {
             Route::get('/', [MasterAssetController::class, 'indexDraft'])->name('admin.listing-asset.draft.index');
             Route::get('/add', [MasterAssetController::class, 'addDraft'])->name('admin.listing-asset.draft.add'); //wahyu tambah
+            Route::post('/checkDuplicateAssetCode', [MasterAssetController::class, 'checkDuplicateAssetCode'])->name('admin.check-duplicate-asset-code'); //wahyu tambah
             Route::get('/get-jenis-aset/{group}', [MasterAssetController::class, 'getJenisAset'])->name('get.jenis.aset'); //wahyu tambah
             Route::post('/delete-many-asset', [MasterAssetController::class, 'deleteManyAsset'])->name('admin.listing-asset.draft.delete-many-asset');
             Route::post('/delete-all-draft-asset', [MasterAssetController::class, 'deleteAllDraftAsset'])->name('admin.listing-asset.draft.delete-all-draft-asset');

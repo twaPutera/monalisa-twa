@@ -313,6 +313,7 @@
                 data: function(params) {
                     return {
                         keyword: params.term, // search term
+                        //alert(keyword);
                     };
                 },
                 processResults: function(data, params) {

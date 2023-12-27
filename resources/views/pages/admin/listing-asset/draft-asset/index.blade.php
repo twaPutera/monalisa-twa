@@ -155,10 +155,16 @@
                         data: 'status_kondisi'
                     },
                     {
-                        data: 'tanggal_perolehan'
+                        data: 'tanggal_perolehan',
+                        render: function(data) {
+                            return data == null ? '-' : data;
+                        }
                     },
                     {
-                        data: 'nilai_perolehan'
+                        data: 'nilai_perolehan',
+                        render: function(data) {
+                            return data == null ? '-' : data;
+                        }
                     },
                     {
                         data: 'tgl_pelunasan',
@@ -756,10 +762,10 @@
                     <button onclick="openModalByClass('modalImportAsset')" class="btn btn-success shadow-custom btn-sm mr-2"
                         type="button"><i class="fa fa-file"></i>
                         Import Data</button>
-                    <button onclick="openModalByClass('modalCreateAsset')" class="btn btn-primary shadow-custom btn-sm"
-                        type="button"><i class="fa fa-plus"></i> Add</button>
-                    <!-- <a href="{{route('admin.listing-asset.draft.add')}}" class="btn btn-primary shadow-custom btn-sm"
-                        type="button"><i class="fa fa-plus"></i>Add</a> -->
+                    <!-- <button onclick="openModalByClass('modalCreateAsset')" class="btn btn-primary shadow-custom btn-sm"
+                        type="button"><i class="fa fa-plus"></i> Add</button> -->
+                    <a href="{{route('admin.listing-asset.draft.add')}}" class="btn btn-primary shadow-custom btn-sm"
+                        type="button"><i class="fa fa-plus"></i>Add</a>
                 </div>
             </div>
             <div class="row">
@@ -768,6 +774,11 @@
                         <h5 class="mb-0"><strong class="text-primary">Data Asset</strong></h5>
                         <h5 class="text-primary"><strong id="totalFilterAktif">Total 0</strong></h5>
                     </div>
+                    @if(session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
                     <div class="table-responsive custom-scroll">
                         <table class="table table-striped table-hover" id="datatableExample">
                             <thead>
