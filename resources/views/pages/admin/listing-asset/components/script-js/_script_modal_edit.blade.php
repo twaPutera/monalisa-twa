@@ -243,7 +243,7 @@
             placeholder: 'Pilih Fungsi',
             dropdownParent: $('.modal.show'),
             ajax: {
-                url: '{{ route('admin.listing-asset.get-all-data-owner-select2') }}',
+                url: '{{ route('admin.listing-asset.get-all-data-unit-kerja-select2') }}',
                 dataType: 'json',
                 delay: 250,
                 data: function(params) {
