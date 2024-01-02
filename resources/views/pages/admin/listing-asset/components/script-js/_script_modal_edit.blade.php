@@ -65,6 +65,7 @@
             generateSatuanAssetEdit();
             generateVendorAssetEdit();
             generateOwnerAssetEdit();
+            generateUnitKerjaEdit();
             generateMemorandumAndinSelect2(false);
             generateKategoriSelect2Edit();
             select2StatusKondisiEdit();
@@ -222,7 +223,32 @@
                 delay: 250,
                 data: function(params) {
                     return {
-                        keyword: params.term, // search term
+                        keyword: params.term, //search term
+                    };
+                },
+                processResults: function(data, params) {
+                    params.page = params.page || 1;
+                    return {
+                        results: data.data,
+                    };
+                },
+                cache: true
+            },
+        });
+    }
+
+    const generateUnitKerjaEdit = () => {
+        $('#unit_kerjaEdit').select2({
+            width: '100%',
+            placeholder: 'Pilih Fungsi',
+            dropdownParent: $('.modal.show'),
+            ajax: {
+                url: '{{ route('admin.listing-asset.get-all-data-owner-select2') }}',
+                dataType: 'json',
+                delay: 250,
+                data: function(params) {
+                    return {
+                        keyword: params.term, //search term
                     };
                 },
                 processResults: function(data, params) {
