@@ -266,7 +266,7 @@
         generateSelect2AssetDataSearchEdit();
     });
 
-    const generateSelect2AssetDataSearchEdit = () => {
+    const generateSelect2AssetDataSearchEdit = () => {//
         $('#assetDataSearch').select2({
             width: '100%',
             placeholder: 'Pilih Asset',
