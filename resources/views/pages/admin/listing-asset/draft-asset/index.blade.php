@@ -479,6 +479,12 @@
                                 `<option value="${data.asset.ownership}" selected>${data.asset.owner_name}</option>`
                             );
                         }
+                        if (data.asset.id_unit_kerja != null && data.asset.id_unit_kerja != '') {
+                            //alert(data.asset.nama_unit_kerja);
+                            form.find(`select[name="unit_kerja"]`).append(
+                                `<option value="${data.asset.id_unit_kerja}" selected>${data.asset.nama_unit_kerja}</option>`
+                            );
+                        }
                         if (data.asset.kelas_asset != null && data.asset.kelas_asset != '') {
                             form.find('select[name="id_kelas_asset"]').append(
                                 `<option value="${data.asset.kelas_asset.id}" selected>${data.asset.kelas_asset.nama_kelas}</option>`

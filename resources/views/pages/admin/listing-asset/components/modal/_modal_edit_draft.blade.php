@@ -71,9 +71,15 @@
                                 </select>
                             </div>
                             <div class="form-group col-md-4 col-6">
-                                <label for="">Asset Holder</label>
+                                <label for="">Ownership</label>
                                 <select name="ownership" class="form-control" id="ownershipAssetEdit">
 
+                                </select>
+                            </div>
+                            <div class="form-group col-md-4 col-6">
+                                <label for="">Fungsi</label>
+                                <select name="unit_kerja" class="form-control" id="unit_kerjaEdit">
+                                  
                                 </select>
                             </div>
                             <div class="form-group col-md-4 col-6">
