@@ -54,6 +54,13 @@ class UserQueryServices
         return User::find($id);
     }
 
+    public function findUnitKerjaById($id){
+        $response=DB::table('unit_kerjas')
+        ->select('nama_unit_kerja')->where('id',$id);
+       
+        return $response->first()->nama_unit_kerja;
+    }
+
     public function getDataUserSelect2(Request $request)
     {
         $data = User::query();

@@ -119,6 +119,7 @@ class AssetDataQueryServices
                 'kategori_asset.group_kategori_asset',
                 'image',
                 'detail_service',
+                'unit_kerja',
                 'log_asset_opname' => function ($query) {
                     $query->orderBy('created_at', 'desc'); // Urutkan berdasarkan created_at descending
                 },
@@ -133,6 +134,7 @@ class AssetDataQueryServices
             $data->save();
         }
         $user = null;
+        $nama_unit_kerja=null;
         $created_by = null;
         if (isset($data->ownership)) {
             if (config('app.sso_siska')) {
@@ -142,6 +144,10 @@ class AssetDataQueryServices
             } else {
                 $user = $this->userQueryServices->findById($data->ownership);
             }
+        }
+
+        if (isset($data->id_unit_kerja)) {
+            $nama_unit_kerja = $this->userQueryServices->findUnitKerjaById($data->id_unit_kerja);
         }
 
         if ($data->log_asset_opname->count() > 0) {
@@ -177,6 +183,7 @@ class AssetDataQueryServices
         $data->link_detail = route('admin.listing-asset.detail', $data->id);
         $data->owner_name = $user == null ? 'Tidak ada' : $user->name ?? $user->nama;
         $data->owner = $user;
+        $data->nama_unit_kerja =$nama_unit_kerja == null ? 'Tidak ada' : $nama_unit_kerja;
         $data->created_by_opname = $created_by == null ? 'Tidak Ada' : $created_by->name ?? $created_by->nama;
         return $data;
     }
