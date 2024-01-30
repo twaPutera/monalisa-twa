@@ -862,10 +862,12 @@ class MasterAssetController extends Controller
     }
 
     public function getNoUrutTwa($id_kategori_asset){
-        $asset =  DB::table('asset_data')
+        $asset = DB::table('asset_data')
         ->where('id_kategori_asset', $id_kategori_asset)
         ->whereRaw('no_urut REGEXP "^([,|.]?[0-9])+$"')
-        ->max('no_urut');
+        ->selectRaw('MAX(CONVERT(no_urut, SIGNED)) AS max_no_urut')
+        ->get()[0]->max_no_urut;
+    
 
         $no_urut_config = DB::table('sistem_configs')
             ->where('config', 'min_no_urut')

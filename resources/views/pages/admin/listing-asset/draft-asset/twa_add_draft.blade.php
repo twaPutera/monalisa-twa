@@ -63,7 +63,6 @@
         <div class="col-md-12 col-12">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <input type="hidden" id="jsonTempAsset" value="[]">
-               
             </div>
             <div class="row">
                 <div class="col-12" id="colTable">
