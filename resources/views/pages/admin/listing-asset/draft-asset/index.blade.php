@@ -539,7 +539,7 @@
                                 `select[name="status_memorandum"] option[value="andin"]`
                             ).prop('selected', true);
                             changeMemorandumStatusEdit('andin');
-                        } else if (
+                        }else if(
                             (typeof data.asset.id_surat_memo_andin === 'undefined' ||
                                 !data.asset.id_surat_memo_andin) &&
                             data.asset.no_memo_surat
@@ -788,6 +788,11 @@
                     @if(session('success'))
                         <div class="alert alert-success">
                             {{ session('success') }}
+                        </div>
+                    @endif
+                    @if(session('success_update'))
+                        <div class="alert alert-success">
+                            {{ session('success_update') }}
                         </div>
                     @endif
                     <div class="table-responsive custom-scroll">
