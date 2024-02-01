@@ -209,18 +209,23 @@
                     {
                         targets: 2,
                         render: function(data, type, full, meta) {
+                            //alert(data);
                             let url_detail = "{{ route('admin.listing-asset.show', ':id') }}";
-                            let url_update =
-                                "{{ route('admin.listing-asset.update.draft', ':id') }}";
+                            let url_update = "{{ route('admin.listing-asset.update.draft', ':id') }}";
                             let url_delete = "{{ route('admin.listing-asset.destroy', ':id') }}";
+                            let url_edit = "{{ route('admin.listing-asset.draft.edit', ':id') }}";
                             url_detail = url_detail.replace(':id', data);
                             url_update = url_update.replace(':id', data);
                             url_delete = url_delete.replace(':id', data);
+                            url_edit = url_edit.replace(':id', data);
                             let element = '';
                             element += `<form action="${url_delete}" method="POST">`;
                             element += `{{ csrf_field() }}`;
+                            // element += `
+                            //     <button type="button" onclick="edit(this)" data-url_detail="${url_detail}" data-url_update="${url_update}" class="btn btn-sm btn-icon btn-warning"><i class="fa fa-edit"></i></button>
+                            // `;
                             element += `
-                                <button type="button" onclick="edit(this)" data-url_detail="${url_detail}" data-url_update="${url_update}" class="btn btn-sm btn-icon btn-warning"><i class="fa fa-edit"></i></button>
+                                <a href="${url_edit}" class="btn btn-sm btn-icon btn-warning"><i class="fa fa-edit"></i></a>
                             `;
                             element += `
                                 <button type="button" onclick="deleteAsset(this)" data-url_delete="" class="btn btn-sm btn-icon btn-danger"><i class="fa fa-trash"></i></button>

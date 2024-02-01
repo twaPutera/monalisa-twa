@@ -158,12 +158,14 @@ class MasterAssetController extends Controller
         try {
             $data = $this->assetDataCommandServices->updateDraft($request, $id);
             DB::commit();
-            return response()->json([
-                'success' => true,
-                'message' => 'Berhasil mengubah data asset',
-                'form' => 'editAsset',
-                'data' => $data,
-            ]);
+            // return response()->json([
+            //     'success' => true,
+            //     'message' => 'Berhasil mengubah data asset',
+            //     'form' => 'editAsset',
+            //     'data' => $data,
+            // ]);
+            session()->flash('success_update', 'Berhasil mengubah data asset');
+            return redirect()->route('admin.listing-asset.draft.index');
         } catch (\Exception $e) {
             DB::rollback();
             return response()->json([
@@ -819,6 +821,68 @@ class MasterAssetController extends Controller
         ->with('lokasi',$arraySelect2)
         ->with('listKelompokAsset',$listKelompokAsset)
         ->with('jenis_asset',$jenis_asset);
+    }
+
+    public function editDraft($id){
+        //dd($id);
+        $asset_data = DB::table('asset_data')->where('id', $id)->first();
+
+        $id_group_kategori_asset = DB::table('kategori_assets')->where('id', $asset_data->id_kategori_asset)->first()->id_group_kategori_asset;
+
+        $image_asset = DB::table('asset_images')->where('imageable_id', $id)->first();
+        
+        $listKelompokAsset = DB::table('group_kategori_assets')->get();
+
+        $satuan = DB::table('satuan_assets')->get();
+
+        $unit_kerja = DB::table('unit_kerjas')->get();
+
+        $kelas_assets = DB::table('kelas_assets')->get();
+
+        $ownership = DB::table('users')->get();
+
+        $jenis_asset = DB::table('kategori_assets')->get();
+
+        $vendors = DB::table('vendors as a')
+            ->join('asset_data as b', 'a.id', '=', 'b.id_vendor')
+            ->groupBy('a.id','a.nama_vendor')
+            ->select('a.id', 'a.nama_vendor')
+            ->get();
+
+        $lokasi = Lokasi::query();
+        $lokasi = $lokasi->where('id_parent_lokasi', null)
+            ->get();
+        foreach ($lokasi as $item) {
+            $arraySelect2[] = [
+                'id' => $item->id,
+                'text' => '- ' . $item->nama_lokasi,
+            ];
+            $arraySelect2 = array_merge($arraySelect2, $this->getSelect2Children($item->id, 2));
+        }
+
+        //dd($arraySelect2[0]['text']);
+        // foreach($arraySelect2 as $row){
+        //     dd($row["text"]);
+        // }
+
+        $list_status = StatusAssetDataHelpers::listStatusAssetData();
+        //dd($list_status);
+
+        //dd(AssetData::where('kode_asset', '45100878')->exists());
+
+        return view('pages.admin.listing-asset.draft-asset.twa_edit_draft')
+        ->with('vendors',$vendors)
+        ->with('satuan',$satuan)
+        ->with('list_status',$list_status)
+        ->with('kelas_assets',$kelas_assets)
+        ->with('unit_kerja',$unit_kerja)
+        ->with('ownership',$ownership)
+        ->with('lokasi',$arraySelect2)
+        ->with('listKelompokAsset',$listKelompokAsset)
+        ->with('jenis_asset',$jenis_asset)
+        ->with('asset_data',$asset_data)
+        ->with('id_group_kategori_asset',$id_group_kategori_asset)
+        ->with('image_asset',$image_asset);
     }
 
     public function checkDuplicateAssetCode(Request $request)

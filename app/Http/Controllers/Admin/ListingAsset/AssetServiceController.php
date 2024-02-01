@@ -49,7 +49,7 @@ class AssetServiceController extends Controller
                 'success' => false,
                 'message' => $th->getMessage(),
             ], 500);
-        }
+        } 
     }
 
     public function datatable(Request $request)
