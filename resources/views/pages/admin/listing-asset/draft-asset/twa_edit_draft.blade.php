@@ -407,7 +407,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" onclick="window.history.back();">Tutup</button>
+                        <button type="button" class="btn btn-secondary" onclick="window.history.back();">Kembali</button>
                             <button type="submit" class="btn btn-primary">Update</button>
                         </div>
                     </form>
