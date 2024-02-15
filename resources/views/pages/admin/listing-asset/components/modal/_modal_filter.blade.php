@@ -42,6 +42,18 @@
                         <option value="1">Asset Yang Dalam Penghapusan</option>
                     </select>
                 </div>
+                <div class="form-group col-md-6 col-12">
+                    <label for="">Status Asset</label>
+                    <select name="is_status" class="form-control" id="isStatusFilter">
+                        <option value="">Semua Status</option>
+                        <option value="bagus">Bagus</option>
+                        <option value="rusak">Rusak</option>
+                        <option value="maintenance">Maintenance</option>
+                        <option value="tidak-lengkap">Tidak Lengkap</option>
+                        <option value="pengembangan">Pengembangan</option>
+                        <option value="tidak-ditemukan">Tidak Ditemukan</option>
+                    </select>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>

@@ -314,21 +314,21 @@
                                         </div>
                                         <div class="form-group d-none" id="memo_manual">
                                             <label for="">Nomor Memorandum</label>
-                                            <input value="{{$asset_data->no_memo_surat}}" type="text" class="form-control" name="no_memo_surat_manual">
+                                            <input value="{{ $asset_data->no_memo_surat ?? old('no_memo_surat_manual')}}" type="text" class="form-control" name="no_memo_surat_manual">
                                         </div>
                                         <div class="form-group" id="twa_nomor_po">
                                             <label for="">Nomor PO</label>
-                                            <input value="{{ $asset_data->no_po}}" type="text" class="form-control" name="no_po">
+                                            <input value="{{ $asset_data->no_po ?? old('no_po')}}" type="text" class="form-control" name="no_po">
                                         </div>
                                         <div class="form-group">
                                             <label for="">Nomor SP3</label>
-                                            <input value="{{ $asset_data->no_sp3}}" type="text" class="form-control" name="no_sp3">
+                                            <input value="{{ $asset_data->no_sp3 ?? old('no_sp3')}}" type="text" class="form-control" name="no_sp3">
                                         </div>
                                     </div>
                                     <div class="col-md-4 col-6">
                                         <div class="form-group">
                                             <label for="">Cost Center</label>
-                                            <input value="{{ $asset_data->cost_center}}" type="text" class="form-control" name="cost_center">
+                                            <input value="{{ $asset_data->cost_center ?? old('cost_center')}}" type="text" class="form-control" name="cost_center">
                                         </div>
                                         {{-- <div class="form-group">
                                             <label for="">Call Center</label>
@@ -407,7 +407,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                            {{--<button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>--}}
                             <button type="submit" class="btn btn-primary">Update</button>
                         </div>
                     </form>

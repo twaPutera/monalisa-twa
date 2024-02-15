@@ -36,8 +36,8 @@ class AssetUpdateDraftRequest extends FormRequest
             'id_satuan_asset' => 'required|uuid|exists:satuan_assets,id',
             'deskripsi' => 'required|string|max:255',
             'tanggal_perolehan' => 'date',
-            'tanggal_pelunasan' => 'date',
-            'nilai_perolehan' => 'numeric',
+            'tanggal_pelunasan' => 'nullable|date',
+            'nilai_perolehan' => 'nullable|numeric',
             'jenis_penerimaan' => 'required|string|max:255|in:PO,Hibah Eksternal,Hibah Penelitian,Hibah Perorangan,UMK,CC,Reimburse',
             //'ownership' => 'nullable|uuid',
             'ownership' => 'nullable', //tambahan dari wahyu

@@ -345,6 +345,10 @@ class AssetDataDatatableServices
             // END SORT GENERAL
         }
 
+        if (isset($request->is_status)) {
+            $query->where('status_kondisi', $request->is_status);
+        }
+
         return DataTables::of($query)
             ->addIndexColumn()
             ->addColumn('group', function ($item) {

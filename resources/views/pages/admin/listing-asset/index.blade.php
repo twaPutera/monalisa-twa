@@ -131,7 +131,8 @@
                         d.is_sparepart = $('#isSparepartFilter').val();
                         d.is_pemutihan = $('#isPemutihanFilter').val();
                         d.is_draft = '0';
-                        //alert(d.id_lokasi);
+                        d.is_status = $('#isStatusFilter').val();
+                        //alert(d.is_draft);
                     }
                 },
                 columns: [{
@@ -324,6 +325,7 @@
             const searchKeyword = $('#searchAsset').val(null);
             const is_sparepart = $('#isSparepartFilter').val(null);
             const is_pemutihan = $('#isPemutihanFilter').val(null);
+            const is_status = $('#isStatusFilter').val(null);
             table.DataTable().ajax.reload();
         }
         const showAsset = (button) => {
