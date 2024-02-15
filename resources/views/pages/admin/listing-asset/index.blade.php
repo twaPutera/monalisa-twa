@@ -129,10 +129,10 @@
                         d.id_kategori_asset = $('#kategoriAssetFilter').val();
                         d.searchKeyword = $('#searchAsset').val();
                         d.is_sparepart = $('#isSparepartFilter').val();
+                        d.is_status = $('#isStatusFilter').val();
                         d.is_pemutihan = $('#isPemutihanFilter').val();
                         d.is_draft = '0';
-                        d.is_status = $('#isStatusFilter').val();
-                        //alert(d.is_draft);
+                        //alert(d.id_lokasi);
                     }
                 },
                 columns: [{
