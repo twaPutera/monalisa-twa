@@ -193,6 +193,9 @@
                     },
                     {
                         data: 'nama_unit_kerja'
+                    },
+                    {
+                        data: 'no_sp3'
                     }
                 ],
                 columnDefs: [{
@@ -820,6 +823,7 @@
                                     <th width="150px">Vendor</th>
                                     <th width="150px">Last Update</th>
                                     <th width="150px">Fungsi</th>
+                                    <th width="150px">No SP3</th>
                                 </tr>
                             </thead>
                             <tbody>
