@@ -172,6 +172,9 @@
                         name: 'user_penerima',
                         data: 'user_penerima',
                         orderable: false,
+                    },
+                    {
+                        data: 'no_sp3'
                     }
                 ],
                 columnDefs: [{
@@ -477,6 +480,7 @@
                                     <th width="150px">Tgl. Pemindahan Asset Terakhir</th>
                                     <th width="150px">User Penyerah Asset</th>
                                     <th width="150px">User Penerima Asset</th>
+                                    <th width="150px">No SP3</th>
                                 </tr>
                             </thead>
                             <tbody>
