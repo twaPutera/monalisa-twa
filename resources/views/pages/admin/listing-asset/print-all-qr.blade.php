@@ -15,6 +15,12 @@
     <link href="{{ asset('assets/css/style.bundle.min.css') }}" rel="stylesheet" type="text/css" />
     
     <style>
+        @media print {
+        body {
+            margin: 0 !important; /* Menghilangkan margin default */
+            }
+        }
+
         .page-break {
             page-break-after: always;
         }
@@ -96,7 +102,9 @@
         @foreach ($assets as $item)
             <div class="col-md-3 border border-dark p-2 @if ($loop->iteration % 16 == 0) page-break @endif">
                 <div class="text-center">
-                    <img src="{{ route('admin.listing-asset.preview-qr') . '?filename=' . $item->qr_code }}"
+                    <!-- <img src="{{ route('admin.listing-asset.preview-qr') . '?filename=' . $item->qr_code }}"
+                        class="my-3 mx-3" width="90%" alt=""> -->
+                        <img src="https://monalisa.universitaspertamina.ac.id/admin/listing-asset/preview-qr?filename=qr-asset-25200014.png"
                         class="my-3 mx-3" width="90%" alt="">
                 </div>
                 <div class="mt-3 text-center">
